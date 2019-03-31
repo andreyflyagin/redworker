@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  worker:
+    image: rednode
+    build:
+      context: .
+    deploy:
+      replicas: 25
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - default
+
+  redis:
+    image: redis:5.0.1
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - default
+
+
+networks:
+  default:
+    driver: overlay
+    attachable: true
